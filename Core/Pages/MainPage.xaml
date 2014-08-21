@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Core.ViewModels;assembly=Core"
+					   x:Class="Core.Pages.MainPage">
+  <ContentPage.BindingContext>
+    <local:MainViewModel/>
+  </ContentPage.BindingContext>
+
+  <StackLayout>
+    <Label Text="Team Black Campfire" Font="Bold, Large" HorizontalOptions="Center" />
+
+    <ListView ItemsSource="{Binding Messages}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+              <StackLayout Padding="5, 0, 0, 0"
+                           Orientation="Horizontal"
+                           Spacing="15">
+
+                <Label Text="{Binding Name}"
+                       Font="Bold, Large" VerticalOptions="Center"/>
+                
+                <Label Text=":" Font="Bold, Large" VerticalOptions="Center"/>
+
+                <Label Text="{Binding Message}" VerticalOptions="Center"
+                                        Font="Medium" />
+
+              </StackLayout>
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+
+    </ListView>
+	<StackLayout Orientation="Horizontal" VerticalOptions="End">
+
+		<Entry HorizontalOptions="FillAndExpand" Placeholder="Type message here..." Text="{Binding Message, Mode=TwoWay}"></Entry>	
+
+	  	<Button Text="Send" Command="{Binding SubmitButtonCommand}"></Button>
+
+	</StackLayout>
+
+    
+  </StackLayout>
+  
+
+</ContentPage>

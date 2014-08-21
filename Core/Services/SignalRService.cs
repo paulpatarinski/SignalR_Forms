@@ -15,7 +15,7 @@ namespace Core
 			set;
 		}
 
-		public IHubProxy _chatHubProxy {
+		IHubProxy _chatHubProxy {
 			get;
 			set;
 		}
@@ -43,6 +43,11 @@ namespace Core
 			// Start the connection
 
 		
+		}
+
+		public void OnMessageReceive (Action<string,string> messageReceivedAction)
+		{
+			_chatHubProxy.On<string, string> ("broadcastMessage", messageReceivedAction);
 		}
 
 		public async Task SendMessageAsync (string message)

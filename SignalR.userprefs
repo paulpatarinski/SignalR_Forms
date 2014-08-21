@@ -1,0 +1,15 @@
+﻿<Properties GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.03cfb437437cd4ac" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core\Pages\MainPage.xaml">
+    <Files>
+      <File FileName="Core\Pages\MainPage.xaml" Line="36" Column="16" />
+      <File FileName="Core\ViewModels\MainViewModel.cs" Line="58" Column="4" />
+      <File FileName="Core\Services\SignalRService.cs" Line="59" Column="3" />
+      <File FileName="Core\ViewModels\BaseViewModel.cs" Line="56" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

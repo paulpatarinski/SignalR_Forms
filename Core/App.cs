@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Pages;
 using Xamarin.Forms;
 
 namespace Core
