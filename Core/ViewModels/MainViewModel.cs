@@ -18,7 +18,7 @@ namespace Core.ViewModels
 			_signalRService = signalRService;
 			ConnectAsync ();
 			SubmitButtonCommand = new Command (() => {
-				SubmitMessage ();
+				SubmitMessage (Message);
 			});
 
 		}
@@ -53,9 +53,9 @@ namespace Core.ViewModels
 
 		public ICommand SubmitButtonCommand { protected set; get; }
 
-		public async Task SubmitMessage ()
+		public async Task SubmitMessage (string message)
 		{
-			_signalRService.SendMessageAsync (Message);
+			_signalRService.SendMessageAsync (message);
 
 			Message = string.Empty;
 		}

@@ -13,6 +13,16 @@ namespace Core.Pages
     public MainPage()
     {
       InitializeComponent();
+    }
+
+    public void ShowMessage(string message)
+    {
+      var viewModel = this.BindingContext as MainViewModel;
+
+      if (viewModel != null)
+      {
+        viewModel.SubmitMessage(message);
+      }
 
     }
   }

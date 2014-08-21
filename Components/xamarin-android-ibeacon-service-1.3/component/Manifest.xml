@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="xamarin-android-ibeacon-service">
+  <name>Android iBeacon Service</name>
+  <publisher>Chris Riesgo</publisher>
+  <publisher-url>https://github.com/chrisriesgo/xamarin-android-ibeacon-service</publisher-url>
+  <version>1.3</version>
+  <summary>A Xamarin.Android library providing APIs to interact with iBeacons.</summary>
+  <samples>
+    <sample id="FindTheMonkey">
+      <name>Find The Monkey - Android.</name>
+      <summary>Demonstrates how to use the Xamarin Android iBeacon Service to monitor proximity between an Android BLE device and a Beacon.</summary>
+    </sample>
+  </samples>
+</component>
