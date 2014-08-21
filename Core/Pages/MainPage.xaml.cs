@@ -17,7 +17,7 @@ namespace Core.Pages
 
     public void ShowMessage(string message)
     {
-      var viewModel = this.BindingContext as MainViewModel;
+      var viewModel = this.BindingContext as ChatViewModel;
 
       if (viewModel != null)
       {

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="com.androidbeacon">
 	<uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17" />
-	<application android:label="AndroidBeacon">
+	<application android:label="IBeacon Chat" android:icon="@drawable/Icon">
 		<service android:enabled="true" android:exported="true" android:isolatedProcess="false" android:label="iBeacon" android:name="com.radiusnetworks.ibeacon.service.IBeaconService"></service>
 		<service android:enabled="true" android:name="com.radiusnetworks.ibeacon.IBeaconIntentProcessor">
 			<meta-data android:name="background" android:value="true" />

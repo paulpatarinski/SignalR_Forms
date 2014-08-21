@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Core.ViewModels;assembly=Core"
 					   x:Class="Core.Pages.MainPage">
   <ContentPage.BindingContext>
-    <local:MainViewModel/>
+    <local:ChatViewModel/>
   </ContentPage.BindingContext>
 
   <StackLayout>

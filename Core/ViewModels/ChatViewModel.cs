@@ -6,14 +6,14 @@ using System.Windows.Input;
 
 namespace Core.ViewModels
 {
-	public class MainViewModel : BaseViewModel
+	public class ChatViewModel : BaseViewModel
 	{
 		//TODO : Use IOC
-		public MainViewModel () : this (new SignalRService ())
+		public ChatViewModel () : this (new SignalRService ())
 		{
 		}
 
-		public MainViewModel (SignalRService signalRService)
+		public ChatViewModel (SignalRService signalRService)
 		{
 			_signalRService = signalRService;
 			ConnectAsync ();

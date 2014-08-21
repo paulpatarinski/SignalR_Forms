@@ -1,10 +1,7 @@
-using System;
 using System.Linq;
 using Android.App;
-using Android.Content;
+using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Core;
 using Core.Pages;
@@ -14,106 +11,108 @@ using Xamarin.Forms.Platform.Android;
 
 namespace AndroidBeacon
 {
-	[Activity (Label = "Android Beacon", MainLauncher = true)]
-	public class MainActivity : AndroidActivity, IBeaconConsumer
-	{
-		const string UUID = "2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6";
-		const string BEACON_ID = "iOSBeacon";
-		IBeaconManager beaconMgr;
-		MonitorNotifier monitorNotifier;
-		RangeNotifier rangeNotifier;
-		Region monitoringRegion;
-		Region rangingRegion;
-		TextView beaconStatusLabel;
-	  private MainPage _mainPage;
+  [Activity(MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+  public class MainActivity : AndroidActivity, IBeaconConsumer
+  {
+    private const string UUID = "2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6";
+    private const string BEACON_ID = "iOSBeacon";
+    private IBeaconManager beaconMgr;
+    private MonitorNotifier monitorNotifier;
+    private RangeNotifier rangeNotifier;
+    private Region monitoringRegion;
+    private Region rangingRegion;
+    private TextView beaconStatusLabel;
+    private MainPage _mainPage;
 
-	  public MainActivity ()
-		{
-			beaconMgr = IBeaconManager.GetInstanceForApplication (this);
+    public MainActivity()
+    {
+      beaconMgr = IBeaconManager.GetInstanceForApplication(this);
 
-			monitorNotifier = new MonitorNotifier ();
-			monitoringRegion = new Region (BEACON_ID, UUID, null, null);
+      monitorNotifier = new MonitorNotifier();
+      monitoringRegion = new Region(BEACON_ID, UUID, null, null);
 
-			rangeNotifier = new RangeNotifier ();
-			rangingRegion = new Region (BEACON_ID, UUID, null, null);
-		}
+      rangeNotifier = new RangeNotifier();
+      rangingRegion = new Region(BEACON_ID, UUID, null, null);
+    }
 
-		public void OnIBeaconServiceConnect ()
-		{
-			beaconMgr.SetMonitorNotifier (monitorNotifier);
-			beaconMgr.SetRangeNotifier (rangeNotifier);
+    public void OnIBeaconServiceConnect()
+    {
+      beaconMgr.SetMonitorNotifier(monitorNotifier);
+      beaconMgr.SetRangeNotifier(rangeNotifier);
 
-			beaconMgr.StartMonitoringBeaconsInRegion (monitoringRegion);
-			beaconMgr.StartRangingBeaconsInRegion (rangingRegion);
-		}
+      beaconMgr.StartMonitoringBeaconsInRegion(monitoringRegion);
+      beaconMgr.StartRangingBeaconsInRegion(rangingRegion);
+    }
 
-		protected override void OnCreate (Bundle bundle)
-		{
-			base.OnCreate (bundle);
+    protected override void OnCreate(Bundle bundle)
+    {
+      base.OnCreate(bundle);
 
       Forms.Init(this, bundle);
 
-		  _mainPage = (MainPage) App.GetMainPage();
+      _mainPage = (MainPage) App.GetMainPage();
 
       SetPage(_mainPage);
 
-			beaconMgr.Bind (this);
+      beaconMgr.Bind(this);
 
-			monitorNotifier.EnterRegionComplete += EnteredRegion;
-			monitorNotifier.ExitRegionComplete += ExitedRegion;
+      monitorNotifier.EnterRegionComplete += EnteredRegion;
+      monitorNotifier.ExitRegionComplete += ExitedRegion;
 
-			rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
-		}
+      rangeNotifier.DidRangeBeaconsInRegionComplete += RangingBeaconsInRegion;
+    }
 
-		void EnteredRegion (object sender, MonitorEventArgs e)
-		{
-			ShowMessage ("Welcome back!");
-		}
+    private void EnteredRegion(object sender, MonitorEventArgs e)
+    {
+      ShowMessage("Welcome back!");
+    }
 
-		void ExitedRegion (object sender, MonitorEventArgs e)
-		{
-			ShowMessage ("Thanks for shopping here!");
-		}
+    private void ExitedRegion(object sender, MonitorEventArgs e)
+    {
+      ShowMessage("Thanks for shopping here!");
+    }
 
-		void RangingBeaconsInRegion (object sender, RangeEventArgs e)
-		{
-			if (e.Beacons.Count > 0) {
-				IBeacon beacon = e.Beacons.FirstOrDefault ();
+    private void RangingBeaconsInRegion(object sender, RangeEventArgs e)
+    {
+      if (e.Beacons.Count > 0)
+      {
+        IBeacon beacon = e.Beacons.FirstOrDefault();
 
-				switch ((ProximityType)beacon.Proximity) {
-				case ProximityType.Immediate:
-            ShowMessage("Proximity immediate ");
+        switch ((ProximityType) beacon.Proximity)
+        {
+          case ProximityType.Immediate:
+            ShowMessage("Proximity immediate " + beacon.Major);
             break;
-        case ProximityType.Near:
-            ShowMessage("Proximity near " );
+          case ProximityType.Near:
+            ShowMessage("Proximity near " + beacon.Major);
             break;
-        case ProximityType.Far:
-					ShowMessage ("Proximity far " );
-					break;
-				case ProximityType.Unknown:
-					ShowMessage ("Beacon proximity unknown");
-					break;
-				}
-			}
-		}
+          case ProximityType.Far:
+            ShowMessage("Proximity far " + beacon.Major);
+            break;
+          case ProximityType.Unknown:
+            ShowMessage("Beacon proximity unknown");
+            break;
+        }
+      }
+    }
 
-		void ShowMessage(string message)
-		{
-		  _mainPage.ShowMessage(message);
-		}
+    private void ShowMessage(string message)
+    {
+      _mainPage.ShowMessage(message);
+    }
 
-		protected override void OnDestroy ()
-		{
-			base.OnDestroy ();
+    protected override void OnDestroy()
+    {
+      base.OnDestroy();
 
-			monitorNotifier.EnterRegionComplete -= EnteredRegion;
-			monitorNotifier.ExitRegionComplete -= ExitedRegion;
+      monitorNotifier.EnterRegionComplete -= EnteredRegion;
+      monitorNotifier.ExitRegionComplete -= ExitedRegion;
 
-			rangeNotifier.DidRangeBeaconsInRegionComplete -= RangingBeaconsInRegion;
+      rangeNotifier.DidRangeBeaconsInRegionComplete -= RangingBeaconsInRegion;
 
-			beaconMgr.StopMonitoringBeaconsInRegion (monitoringRegion);
-			beaconMgr.StopRangingBeaconsInRegion (rangingRegion);
-			beaconMgr.UnBind (this);
-		}
-	}
+      beaconMgr.StopMonitoringBeaconsInRegion(monitoringRegion);
+      beaconMgr.StopRangingBeaconsInRegion(rangingRegion);
+      beaconMgr.UnBind(this);
+    }
+  }
 }
